@@ -8,6 +8,10 @@ app.use(express.json());
 app.use(cors());
 
 // routes
+
+//register and login routes
+app.use('/auth', require('./routes/jwtAuth'));
+
 app.listen(5000, () => {
   console.log('Server running at http://localhost:5000');
 });
