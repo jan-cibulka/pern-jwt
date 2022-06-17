@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -11,6 +11,8 @@ function App() {
   const setAuth = boolean => {
     setIsAuthenticated(boolean);
   };
+
+  useEffect(() => {}, []);
   return (
     <>
       <Router>
@@ -22,7 +24,7 @@ function App() {
             />
             <Route
               path="/register"
-              element={isAuthenticated ? <Register setAuth={setAuth} /> : <Navigate to="/login" />}
+              element={!isAuthenticated ? <Register setAuth={setAuth} /> : <Navigate to="/login" />}
             />
             <Route
               path="/dashboard"
