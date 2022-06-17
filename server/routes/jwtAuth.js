@@ -2,8 +2,9 @@ const router = require('express').Router();
 const pool = require('../db');
 const bcrypt = require('bcrypt');
 const jwtGenerator = require('../utils/jwtGenerator');
-
-router.post('/login', async function (req, res) {
+const validInfo = require('../middleware/validInfo');
+const authorization = require('../middleware/authorization');
+router.post('/login', validInfo, async function (req, res) {
   try {
     //1.destructure
     const { email, password } = req.body;
@@ -34,7 +35,7 @@ router.post('/login', async function (req, res) {
   }
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', validInfo, async (req, res) => {
   //1. deconstruct the request object
   const { name, email, password } = req.body;
   //2. check if user exists
@@ -66,4 +67,11 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.get('/is-verify', authorization, async (req, res) => {
+  try {
+    res.json(true);
+  } catch (err) {
+    console.log(err);
+  }
+});
 module.exports = router;
